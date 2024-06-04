@@ -15,7 +15,8 @@ const config: Config = {
         beige: {
           100: '#FFFFFF',
           200: '#FCF7F2',
-          300: '#F6EFE8',
+          300: '#f5e9e1',
+          500: '#F4E7DD',
           400: '#F6E6DB',
         },
       
