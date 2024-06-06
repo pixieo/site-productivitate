@@ -12,16 +12,30 @@ export default function ArticlesPreview() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getArticlesPreviews()
-      .then((articlesPreviews) => {
-        setArticles(articlesPreviews);
+    if (isClickedIT) {
+      getArticlesPreviews('IT')
+      .then((data) => {
+        setArticles(data);
         setIsLoading(false);
       })
       .catch((error) => {
         setError(error.toString());
         setIsLoading(false);
       });
-  }, []);
+    } else if (isClickedProd) {
+      getArticlesPreviews('productivitate')
+      .then((data) => {
+        setArticles(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.toString());
+        setIsLoading(false);
+      });
+    }
+  }, [isClickedIT, isClickedProd]);
+
+
 
   const articlesProd = {
     isClicked: isClickedProd,

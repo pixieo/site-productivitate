@@ -1,5 +1,5 @@
 "use client";
-import FetchStaticContent from "./fetchStaticContent";
+import StaticContent from "./staticContent";
 import Image from "next/image";
 
 export default function AboutSite() {
@@ -15,7 +15,7 @@ export default function AboutSite() {
         />
       </div>
       <div className="flex flex-col flex-wrap justify-center gap-6 rounded-xl px-14 py-10 md:w-7/12  bg-beige-300">
-        {<FetchStaticContent type={'Descriere site'} />}
+        {<StaticContent type={'Descriere site'} />}
       </div>
     </div>
   );

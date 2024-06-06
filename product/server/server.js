@@ -38,22 +38,62 @@ app.get("/static-content/:id", async (req, res) => {
   }
 });
 
-app.get("/articlesPreview", async (req, res) => {
-  try {
-    const articlesPreview = await client.query(
-      "SELECT title, preview FROM Articles ORDER BY created_at DESC LIMIT 3"
-    );
+// app.get("/articlesPreview", async (req, res) => {
+//   const tagTitle = req.query.tagTitle;
 
-    res.json(articlesPreview.rows);
+//   try {
+    // const articlesPreview = await client.query(
+    //   `SELECT a.title, a.preview 
+    //   FROM Articles a
+    //   JOIN ArticleTags at ON a.id = at.article_id
+    //   JOIN Tags t ON at.tag_id = t.id
+    //   WHERE t.title = $1
+    //   ORDER BY created_at DESC LIMIT 3`,
+    //   [tagTitle]
+    // );
+
+//     res.json(articlesPreview.rows);
+//   } catch (err) {
+//     console.error(`Error `, err);
+//     res.status(500).send("Server error");
+//   }
+// });
+
+app.get('/articlesPreview', async (req, res) => {
+  const tagTitle = req.query.tagTitle;
+
+  console.log(`Received tag title: ${tagTitle}`);
+
+  if (!tagTitle) {
+    console.error('Tag title is required');
+    return res.status(400).send('Tag title is required');
+  }
+
+  try {
+    const query = `SELECT a.title, a.preview 
+    FROM Articles a
+    JOIN ArticleTags at ON a.id = at.article_id
+    JOIN Tags t ON at.tag_id = t.id
+    WHERE t.title = $1
+    ORDER BY created_at DESC LIMIT 3`;
+
+    console.log('Executing query:', query, 'with tagTitle:', tagTitle);
+
+    const result = await client.query(query, [tagTitle]);
+
+    console.log('Query result:', result.rows);
+
+    res.json(result.rows);
   } catch (err) {
-    console.error(`Error `, err);
-    res.status(500).send("Server error");
+    console.error('Error fetching articles:', err);
+    res.status(500).send('Server error');
   }
 });
 
+
 app.get("/services", async (req, res) => {
   try {
-    const services = await client.query("SELECT title, preview FROM Services");
+    const services = await client.query("SELECT * FROM Services");
 
     res.json(services.rows);
   } catch (err) {

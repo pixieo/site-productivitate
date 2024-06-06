@@ -1,10 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { gotu } from "@/app/ui/fonts";
-import { StaticContent, getStaticContent } from "../backend/articles";
+import { StaticContent as StaticContentData, getStaticContent } from "../backend/staticContent";
 
-export default function FetchStaticContent({ type }) {
-  const [data, setData] = useState<StaticContent>();
+type StaticContentProps = {
+  type: string;
+}
+
+export default function StaticContent({type}: StaticContentProps) {
+  const [data, setData] = useState<StaticContentData>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,7 +25,7 @@ export default function FetchStaticContent({ type }) {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className=""></div>;
   }
 
   if (error) {
