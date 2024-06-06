@@ -68,7 +68,7 @@ export default function From() {
 
       <div className="mt-4 mb-40 px-5 flex flex-col justify-center items-center h-96 gap-20 md:flex-row">
         <ServicesPreview services={services} selectedServicesIds={selectedServicesIds} onServicePressed={handleServicePressed}/>
-        <FormText selectedServicesIds={selectedServicesIds} services={services}/>
+        <FormText selectedServicesIds={selectedServicesIds} services={services} onServicePressed={handleServicePressed}/>
       </div>
     </div>
   );

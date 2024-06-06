@@ -20,7 +20,7 @@ export default function ServicesPreview(props: ServicesPreviewProps) {
             props.onServicePressed(service.id)
           }}
           className={`flex flex-col justify-even gap-5 rounded-xl pb-8 w-2/5 bg-beige-500 h-fit 
-                      transition duration-500 hover:scale-105 ring-4 select-none cursor-pointer
+                      transition duration-300 hover:scale-105 ring-4 select-none cursor-pointer
           ${props.selectedServicesIds.includes(service.id) ? "ring-beige-600/70" : "ring-transparent"}
           `}
         >

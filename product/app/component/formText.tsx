@@ -1,14 +1,18 @@
 import { gotu } from "@/app/ui/fonts";
 import { Service } from "../backend/services";
+import { IoCloseOutline } from "react-icons/io5";
 
 type FormTextProps = {
   selectedServicesIds: Service["id"][];
   services: Service[];
+  onServicePressed: (serviceId: number) => void;
 };
 
 export default function FormText(props: FormTextProps) {
   return (
-    <form className={`${gotu.className} bg-beige-500 h-3/4 rounded-xl shadow-md`}>
+    <form
+      className={`${gotu.className} bg-beige-500 h-3/4 rounded-xl shadow-md`}
+    >
       <div className="mt-8 mb-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-3 px-4">
           <label htmlFor="full-name" className="block leading-6 text-gray-900">
@@ -46,7 +50,9 @@ export default function FormText(props: FormTextProps) {
       </div>
       <div className="flex mt-4 mx-4 gap-6 h-8">
         {props.selectedServicesIds.length === 0 ? (
-          <div className="text-slate-600/60">Nu ai selectat niciun serviciu.</div>
+          <div className="text-slate-600/60">
+            Nu ai selectat niciun serviciu.
+          </div>
         ) : (
           props.selectedServicesIds.map((serviceId) => {
             const service = props.services.find(
@@ -54,11 +60,15 @@ export default function FormText(props: FormTextProps) {
             ) as Service;
 
             return (
-              <div
-                key={service.id}
-                className="bg-beige-200 rounded-md py-1 px-6 shadow-md"
-              >
-                {service.title}
+              <div className="group">
+                <div
+                  key={service.id}
+                  className="bg-beige-200 rounded-md py-1 px-6 shadow-md cursor-pointer relative group-hover:opacity-80 transition duration-200"
+                  onClick={() => props.onServicePressed(service.id)}
+                >
+                  {service.title}
+                  <IoCloseOutline className="absolute top-0 right-0 opacity-35 group-hover:opacity-100 transition duration-200" />
+                </div>
               </div>
             );
           })
@@ -69,7 +79,7 @@ export default function FormText(props: FormTextProps) {
           type="submit"
           className="rounded-md px-3 py-1 font-semibold shadow-md
                 border-2 border-beige-400 bg-beige-200
-                hover:bg-beige-600 focus-visible:outline focus-visible:outline-2 
+                hover:bg-beige-200/50 focus-visible:outline focus-visible:outline-2 
                 focus-visible:outline-offset-2 focus-visible:outline-beige-400"
         >
           Trimite
