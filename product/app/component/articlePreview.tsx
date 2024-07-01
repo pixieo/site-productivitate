@@ -13,29 +13,27 @@ export default function ArticlesPreview() {
 
   useEffect(() => {
     if (isClickedIT) {
-      getArticlesPreviews('IT')
-      .then((data) => {
-        setArticles(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.toString());
-        setIsLoading(false);
-      });
+      getArticlesPreviews("technology")
+        .then((data) => {
+          setArticles(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(error.toString());
+          setIsLoading(false);
+        });
     } else if (isClickedProd) {
-      getArticlesPreviews('productivitate')
-      .then((data) => {
-        setArticles(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.toString());
-        setIsLoading(false);
-      });
+      getArticlesPreviews("productivity")
+        .then((data) => {
+          setArticles(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(error.toString());
+          setIsLoading(false);
+        });
     }
   }, [isClickedIT, isClickedProd]);
-
-
 
   const articlesProd = {
     isClicked: isClickedProd,
@@ -81,47 +79,62 @@ export default function ArticlesPreview() {
           TECH IT
         </button>
       </div>
-
-      <div className="mt-4 mb-20 flex flex-col justify-center h-96 gap-20 md:flex-row">
-        {isClickedProd
-          ? articles.map((article, index) => (
-              <div
-                className={`flex flex-col justify-even gap-5 rounded-xl pb-8 w-1/5 bg-beige-300 border-4 border-beige-500 h-fit transition-all duration-200 `}
-                key={index}
-              >
-                <img
-                  className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-                  src={articlesProd.imgSrcProd[index]}
-                  alt={articlesProd.imgAltProd[index]}
-                />
-                <div className="flex flex-col gap-1 text-center px-6 leading-normal ">
-                  <p className="text-2xl"> {article.title} </p>
-                  <p> {article.preview} </p>
-                </div>
-              </div>
-            ))
-          : articles.map((article, index) => (
-              <div
-                className={`flex flex-col justify-even gap-5 rounded-xl pb-8 w-1/5 bg-beige-300 border-4 border-beige-500 h-fit transition-all duration-200 `}
-              >
-                <img
-                  className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-                  src={articlesIT.imgSrcIT[index]}
-                  alt={articlesIT.imgAltIT[index]}
-                />
+      <div className="flex justify-center">
+        <div className="mt-4 mb-20 flex flex-col justify-center h-96 w-5/6 gap-20 md:flex-row">
+          {isClickedProd
+            ? articles.map((article, index) => (
                 <div
-                  className="flex flex-col gap-1 text-center px-6 leading-normal "
+                  className={`flex flex-col justify-even gap-4 rounded-xl pb-8 w-1/4 bg-beige-300 border-4 border-beige-500 h-fit transition-all duration-200 `}
                   key={index}
+                  style={{ height: "450px" }}
                 >
-                  <p className="text-2xl"> {article.title} </p>
-                  <p> {article.preview} </p>
+                  <img
+                    className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
+                    src={articlesProd.imgSrcProd[index]}
+                    alt={articlesProd.imgAltProd[index]}
+                  />
+                  <div className="flex flex-col gap-1 text-center leading-normal text-clip">
+                    <p className={`${gotu.className} px-1 text-xl font-bold`}>
+                      {" "}
+                      {article.title}{" "}
+                    </p>
+                    <p className="px-6 truncate line-clamp-[8] whitespace-normal">
+                      {" "}
+                      {article.preview}{" "}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            : articles.map((article, index) => (
+                <div
+                  className={`flex flex-col justify-even gap-4 rounded-xl pb-8 w-1/4 bg-beige-300 border-4 border-beige-500 h-fit transition-all duration-200 `}
+                  style={{ height: "450px" }}
+                >
+                  <img
+                    className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
+                    src={articlesIT.imgSrcIT[index]}
+                    alt={articlesIT.imgAltIT[index]}
+                  />
+                  <div
+                    className="flex flex-col gap-1 text-center leading-normal "
+                    key={index}
+                  >
+                    <p className={`${gotu.className} px-1 text-xl font-bold`}>
+                      {" "}
+                      {article.title}{" "}
+                    </p>
+                    <p className="px-6 truncate line-clamp-[8] whitespace-normal">
+                      {" "}
+                      {article.preview}{" "}
+                    </p>
+                  </div>
+                </div>
+              ))}
+        </div>
       </div>
 
-      <div className="flex justify-center mb-20">
-        <button className="bg-beige-300 rounded-3xl text-lg py-1 px-10 border-2 border-beige-400 hover:bg-beige-500 hover:border-beige-300 duration-500 ">
+      <div className={`${gotu.className} flex justify-center mb-20`}>
+        <button className="bg-beige-300 rounded-3xl text-lg py-1 px-10 border-2 border-beige-400 hover:bg-beige-500 hover:border-beige-600 ease-in duration-150 ">
           VEZI TOATE ARTICOLELE
         </button>
       </div>

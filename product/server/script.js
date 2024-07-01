@@ -22,7 +22,7 @@ async function createTables() {
 
   const createServicesTable = `
         CREATE TABLE IF NOT EXISTS Services (
-            id SERIAL PRIMARY KEY,
+            id VARCHAR(225) PRIMARY KEY NOT NULL,
             title VARCHAR(225) NOT NULL UNIQUE,
             preview TEXT NOT NULL
         );
@@ -31,7 +31,7 @@ async function createTables() {
   const createClientServicesTable = `
         CREATE TABLE IF NOT EXISTS ClientServices (
             client_id INT REFERENCES Clients(id),
-            service_id INT REFERENCES Services(id),
+            service_id VARCHAR(225) REFERENCES Services(id),
             PRIMARY KEY(client_id, service_id)
         );
     `;

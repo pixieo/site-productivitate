@@ -1,15 +1,16 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { gotu } from "../ui/fonts";
 
 export default function Instagram() {
   return (
-    <div className="mt-8 mb-14 flex grow flex-col gap-4" id="instagram">
+    <div className={`${gotu.className} mt-8 mb-14 flex grow flex-col gap-4`} id="instagram">
           <div className="flex justify-center mb-14">
             <Link
               href={"https://www.instagram.com/andreea.zosin/"}
               target="_blank"
-              className="bg-beige-300 rounded-3xl py-1 px-10 border-2 border-beige-300 hover:border-beige-400 text-2xl"
+              className="bg-beige-300 rounded-3xl py-1 px-10 border-2 border-beige-300 hover:border-beige-600 text-xl ease-in duration-150"
             >
               Urmărește-mă pe Instagram
             </Link>

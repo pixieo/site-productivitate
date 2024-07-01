@@ -39,7 +39,7 @@ export default function StaticContent({type}: StaticContentProps) {
       >
         {data?.title}
       </p>
-      <p className={`text-xl text-gray-800 md:text-2xl md:leading-normal`}>
+      <p className={`text-xl leading-relaxed text-gray-800 `}>
         {data?.content}
       </p>
     </>

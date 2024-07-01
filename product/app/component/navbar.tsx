@@ -1,17 +1,21 @@
 "use client";
 import { gotu } from "@/app/ui/fonts";
+import { PiInstagramLogoLight } from "react-icons/pi";
 
 export default function Navbar() {
   return (
-    <nav className={`${gotu.className} z-50 sticky top-0 bg-beige-100/80`}>
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className={`${gotu.className} z-50 sticky top-0 bg-beige-100/80`}
+    style={{ '--navbar-height': 'var(--navbar-height)' } as React.CSSProperties}
+    >
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      style={{ height: 'var(--navbar-height)' }}>
         <a href="#top">
           <button
             type="button"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span className="self-center text-2xl whitespace-nowrap">
-              ANDREEA ZOSIN
+              SITE PRODUCTIVITATE
             </span>
           </button>
         </a>
@@ -25,7 +29,7 @@ export default function Navbar() {
               <a href="#aboutMe">
                 <button
                   className="relative inline-flex items-center justify-center overflow-hidden 
-                  text-gray-900 rounded-lg group hover:bg-beige-200 hover:rounded-2xl mt-2.5 mb-2.5 px-2.5"
+                  text-gray-900 rounded-lg group hover:bg-beige-200 hover:rounded-2xl mt-2.5 mb-2.5 px-2.5 ease-in duration-200"
                 >
                   <span className="relative leading-9 transition-all ease-in duration-75 text-lg">
                     DESPRE MINE
@@ -37,7 +41,7 @@ export default function Navbar() {
               <a href="#articles">
                 <button
                   className="relative inline-flex items-center justify-center overflow-hidden 
-              text-gray-900 rounded-lg group hover:bg-beige-200 hover:rounded-2xl mt-2.5 mb-2.5 px-2.5"
+              text-gray-900 rounded-lg group hover:bg-beige-200 hover:rounded-2xl mt-2.5 mb-2.5 px-2.5 ease-in duration-200"
                 >
                   <span className="relative leading-9 transition-all ease-in duration-75 text-lg">
                     ARTICOLE
@@ -49,11 +53,18 @@ export default function Navbar() {
               <a href="#services">
                 <button
                   className="relative inline-flex items-center justify-center overflow-hidden 
-              text-gray-900 rounded-lg group hover:bg-beige-200 hover:rounded-2xl mt-2.5 mb-2.5 px-2.5"
+              text-gray-900 rounded-lg group hover:bg-beige-200 hover:rounded-2xl mt-2.5 mb-2.5 px-2.5 ease-in duration-200"
                 >
                   <span className="relative leading-9 transition-all ease-in duration-75 text-lg">
                     LUCREAZĂ CU MINE
                   </span>
+                </button>
+              </a>
+            </li>
+            <li>
+              <a href="#instagram">
+                <button className="text-3xl text-gray-900 mt-2.5 mb-2.5 px-2">
+                <PiInstagramLogoLight />
                 </button>
               </a>
             </li>

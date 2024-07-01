@@ -16,3 +16,15 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.full-screen-minus-nav {
+  height: calc(100vh - var(--navbar-height));
+}
+
+.full-screen-about-me {
+  height: calc(100vh);
+}
+
+:root {
+  --navbar-height: 8rem;
+}

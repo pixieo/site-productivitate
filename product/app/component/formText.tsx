@@ -6,12 +6,19 @@ type FormTextProps = {
   selectedServicesIds: Service["id"][];
   services: Service[];
   onServicePressed: (serviceId: number) => void;
+  onChangeName: (value: string) => void;
+  onChangeEmail: (value: string) => void;
+  onSubmit: () => void;
 };
 
 export default function FormText(props: FormTextProps) {
   return (
     <form
-      className={`${gotu.className} bg-beige-500 h-3/4 rounded-xl shadow-md`}
+      className={`${gotu.className} bg-beige-500 h-4/5 rounded-xl shadow-md`}
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.onSubmit();
+      }}
     >
       <div className="mt-8 mb-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-3 px-4">
@@ -28,6 +35,9 @@ export default function FormText(props: FormTextProps) {
                     bg-beige-200
                     border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
                     focus:ring-2 focus:ring-inset focus:ring-beige-400 sm:text-sm sm:leading-6 shadow-md"
+              onChange={(e) => {
+                props.onChangeName(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -45,12 +55,15 @@ export default function FormText(props: FormTextProps) {
             autoComplete="email"
             className="block w-full bg-beige-200 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
                   ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-beige-400 sm:text-sm sm:leading-6 shadow-md"
+            onChange={(e) => {
+              props.onChangeEmail(e.target.value);
+            }}
           />
         </div>
       </div>
       <div className="flex mt-4 mx-4 gap-6 h-8">
         {props.selectedServicesIds.length === 0 ? (
-          <div className="text-slate-600/60">
+          <div className="text-slate-600/60 mt-2">
             Nu ai selectat niciun serviciu.
           </div>
         ) : (
@@ -78,7 +91,7 @@ export default function FormText(props: FormTextProps) {
         <button
           type="submit"
           className="rounded-md px-3 py-1 font-semibold shadow-md
-                border-2 border-beige-400 bg-beige-200
+                border-2 border-beige-400 bg-beige-200 mt-4
                 hover:bg-beige-200/50 focus-visible:outline focus-visible:outline-2 
                 focus-visible:outline-offset-2 focus-visible:outline-beige-400"
         >

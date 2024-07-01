@@ -1,5 +1,5 @@
 import '@/app/ui/global.css';
-import { cormorantGaramond } from '@/app/ui/fonts';
+import { noto } from '@/app/ui/fonts';
 
 export default function RootLayout({
   children,
@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='scroll-smooth' id='top'>
-      <body className={`${cormorantGaramond.className} antialias bg-beige-200`}>{children}</body>
+      <body className={`${noto.className} antialias bg-beige-200`}>{children}</body>
     </html>
   );
 }
