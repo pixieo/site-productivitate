@@ -4,7 +4,7 @@ import { gotu } from "../ui/fonts";
 type ServicesPreviewProps = {
   services: Service[];
   selectedServicesIds: Service["id"][];
-  onServicePressed: (serviceId: number) => void;
+  onServicePressed: (serviceId: Service["id"]) => void;
 };
 
 export default function ServicesPreview(props: ServicesPreviewProps) {

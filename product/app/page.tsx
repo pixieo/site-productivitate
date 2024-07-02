@@ -1,4 +1,3 @@
-import { gotu } from "@/app/ui/fonts";
 import ArticlesPreview from "./component/articlePreview";
 import AboutMe from "./component/aboutMe";
 import AboutSite from "./component/aboutSite";

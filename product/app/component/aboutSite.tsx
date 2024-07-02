@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function AboutSite() {
   return (
-    <div className="max-w-[85rem] mx-auto mb-8 flex full-screen-minus-nav items-center justify-center flex-col md:flex-row pr-10">
+    <div className="max-w-[85rem] mx-auto mb-8 flex full-screen-minus-nav items-center justify-center flex-col md:flex-row pr-10 ">
       <div className="flex items-center justify-center p-1 md:w-2/5 md:pr-20 md:py-1">
         <Image
           src="/greens.jpg"

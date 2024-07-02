@@ -7,15 +7,19 @@ import { Service, getServices } from "../backend/services";
 import { Customer, createCustomer } from "../backend/customer";
 
 export default function From() {
+  const [formState, setFormState] = useState<
+    "INITIAL" | "LOADING" | "SUCCESSFUL" | "UNSUCCESSFUL"
+  >("INITIAL");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [services, setServices] = useState<Service[]>([]);
-  const [selectedServicesIds, setSelectedServicesIds] = useState<number[]>([]);
+  const [selectedServicesIds, setSelectedServicesIds] = useState<
+    Service["id"][]
+  >([]);
 
   useEffect(() => {
     getServices()
@@ -27,39 +31,13 @@ export default function From() {
         setError(error.toString());
         setIsLoading(false);
       });
-
-    if (isSubmitted) {
-      const submitData = async () => {
-        try {
-          const customer: Customer = {
-            name: name,
-            email: email,
-            services: selectedServicesIds,
-          };
-
-          console.log(customer)
-
-          await createCustomer(customer);
-          console.log("Customer created successfully");
-        } catch (error) {
-          console.error("Error creating customer:", error);
-        }
-      };
-
-      submitData();
-      setIsSubmitted(false);
-    }
-  }, [isSubmitted]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  }, []);
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  const handleServicePressed = (serviceId: number) => {
+  const handleServicePressed = (serviceId: string) => {
     setSelectedServicesIds((prevIds) => {
       if (!prevIds.includes(serviceId)) {
         return [...prevIds, serviceId];
@@ -96,7 +74,24 @@ export default function From() {
   };
 
   const onSubmit = (): void => {
-    setIsSubmitted(true);
+    setFormState("LOADING");
+    const submitData = async () => {
+      try {
+        const customer: Customer = {
+          name,
+          email,
+          services: selectedServicesIds,
+        };
+        await createCustomer(customer);
+        console.log("Customer created successfully");
+        setFormState("SUCCESSFUL");
+      } catch (error) {
+        console.error("Error creating customer:", error);
+        setFormState("UNSUCCESSFUL");
+      }
+    };
+
+    submitData();
   };
 
   return (
@@ -123,6 +118,7 @@ export default function From() {
           onChangeName={onChangeName}
           onChangeEmail={onChangeEmail}
           onSubmit={onSubmit}
+          formState={formState}
         />
       </div>
     </div>

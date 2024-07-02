@@ -6,6 +6,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors());
+app.use(express.json());
 
 const client = new Client({
   user: "postgres",
@@ -75,11 +76,11 @@ app.get("/services", async (req, res) => {
   }
 });
 
-app.put("/create-customer", async (req, res) => {
+app.post("/create-customer", async (req, res) => {
   try {
     const {name, email, services} = req.body;
-
-    const customerResult = await client.query("INSERT INTO Clients(name, email, created_at) VALUES ($1, $2, NOW() RETURNING id)" , [name, email]);
+    
+    const customerResult = await client.query("INSERT INTO Clients(name, email, created_at) VALUES ($1, $2, NOW()) RETURNING id" , [name, email]);
 
     const customerId = customerResult.rows[0].id;
 

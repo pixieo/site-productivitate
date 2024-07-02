@@ -19,7 +19,7 @@ const DEFAULT_SERVICE_IMG: ServiceImg = {
 }
 
 export type Service = {
-  id: number;
+  id: string;
   title: string;
   preview: string;
   imgLink: string;

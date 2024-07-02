@@ -4,7 +4,7 @@ import { PiInstagramLogoLight } from "react-icons/pi";
 
 export default function Navbar() {
   return (
-    <nav className={`${gotu.className} z-50 sticky top-0 bg-beige-100/80`}
+    <nav className={`${gotu.className} z-50 sticky shadow-md top-0 bg-beige-100/80`}
     style={{ '--navbar-height': 'var(--navbar-height)' } as React.CSSProperties}
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"

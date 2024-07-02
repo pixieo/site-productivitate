@@ -8,6 +8,31 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        pulse: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        text: 'text 5s ease infinite',
+      },
+      keyframes: {
+        pulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '.5' },
+        },
+        text: {
+          '0%, 100%': { 
+            backgroundSize: '200% 200%',
+            backgroundPosition: 'left center'
+          },
+          '50%': { 
+            backgroundSize: '200% 200%',
+            backgroundPosition: 'right center' 
+          },
+        },
+        shimmer: {
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+      },
       gridTemplateColumns: {
         "13": "repeat(13, minmax(0, 1fr))",
       },
@@ -32,14 +57,8 @@ const config: Config = {
         490: '490px',
       },
     },
-    keyframes: {
-      shimmer: {
-        "100%": {
-          transform: "translateX(100%)",
-        },
-      },
-    },
   },
   plugins: [require("@tailwindcss/forms")],
 };
+
 export default config;

@@ -1,5 +1,3 @@
-import { Service } from "./services";
-
 export type Customer = {
   name: string;
   email: string;
@@ -8,7 +6,7 @@ export type Customer = {
 
 export const createCustomer = async (customer: Customer): Promise<void> => {
     const response = await fetch('http://localhost:3001/create-customer', {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },

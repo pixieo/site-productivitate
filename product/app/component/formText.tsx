@@ -5,21 +5,16 @@ import { IoCloseOutline } from "react-icons/io5";
 type FormTextProps = {
   selectedServicesIds: Service["id"][];
   services: Service[];
-  onServicePressed: (serviceId: number) => void;
+  onServicePressed: (serviceId: Service["id"]) => void;
   onChangeName: (value: string) => void;
   onChangeEmail: (value: string) => void;
   onSubmit: () => void;
+  formState: string;
 };
 
 export default function FormText(props: FormTextProps) {
-  return (
-    <form
-      className={`${gotu.className} bg-beige-500 h-4/5 rounded-xl shadow-md`}
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.onSubmit();
-      }}
-    >
+  const renderFormFields = () => (
+    <div>
       <div className="mt-8 mb-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div className="sm:col-span-3 px-4">
           <label htmlFor="full-name" className="block leading-6 text-gray-900">
@@ -73,7 +68,7 @@ export default function FormText(props: FormTextProps) {
             ) as Service;
 
             return (
-              <div className="group">
+              <div className="group" key={service.id}>
                 <div
                   key={service.id}
                   className="bg-beige-200 rounded-md py-1 px-6 shadow-md cursor-pointer relative group-hover:opacity-80 transition duration-200"
@@ -91,13 +86,38 @@ export default function FormText(props: FormTextProps) {
         <button
           type="submit"
           className="rounded-md px-3 py-1 font-semibold shadow-md
-                border-2 border-beige-400 bg-beige-200 mt-4
-                hover:bg-beige-200/50 focus-visible:outline focus-visible:outline-2 
+                border-2 border-beige-400 bg-beige-200 mt-4 ease-in duration-150
+                hover:border-beige-600 focus-visible:outline focus-visible:outline-2 
                 focus-visible:outline-offset-2 focus-visible:outline-beige-400"
+          disabled={props.formState === "LOADING"}
         >
           Trimite
         </button>
       </div>
+    </div>
+  );
+
+  return (
+    <form
+      className={`${gotu.className} bg-beige-500 h-4/5 rounded-xl shadow-md`}
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.onSubmit();
+      }}
+    >
+      {props.formState === "INITAL" || "LOADING" ? renderFormFields() : null}
+
+      {props.formState === "SUCCESSFUL" ? (
+        <div>
+          Mesajul tau a fost trimis. Te voi contacta eu in cel mai scurt timp.
+        </div>
+      ) : null}
+      {props.formState === "UNSUCCESSFUL" ? (
+        <div>
+          Mesajul tau nu a fost trimis. Incearca mai tarziu. Daca eroarea
+          persista, scrie-mi pe Instagram.
+        </div>
+      ) : null}
     </form>
   );
 }
