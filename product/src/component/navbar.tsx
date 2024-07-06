@@ -1,5 +1,5 @@
 "use client";
-import { gotu } from "@/app/ui/fonts";
+import { gotu } from "../ui/fonts";
 import { PiInstagramLogoLight } from "react-icons/pi";
 
 export default function Navbar() {
@@ -14,8 +14,8 @@ export default function Navbar() {
             type="button"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center text-2xl whitespace-nowrap">
-              SITE PRODUCTIVITATE
+            <span className="self-center text-2xl whitespace-nowrap pl-6 font-bold">
+              BALANCE
             </span>
           </button>
         </a>

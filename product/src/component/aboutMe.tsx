@@ -10,7 +10,7 @@ export default function AboutMe() {
         <FetchStaticContent type={'self-description'}/>
       </div>
     </div>
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center min-w-[25rem]">
       <Image
         src="/fruit.jpg"
         width={710}

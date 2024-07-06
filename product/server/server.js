@@ -76,27 +76,80 @@ app.get("/services", async (req, res) => {
   }
 });
 
+app.get("/blog-contents", async (req, res) => {
+  try {
+    const categories = [];
+    const tags = await client.query(`SELECT * FROM tags;`);
+
+    for (tag of tags.rows) {
+      const articleTitles = await client.query(`
+      SELECT id, title FROM articles
+      INNER JOIN articletags ON id = article_id
+      WHERE tag_id = ${tag.id}
+      ORDER BY created_at DESC LIMIT 3;`);
+      categories.push({ title: tag.title, articleTitles: articleTitles.rows });
+    }
+
+    const articles = await client.query(`
+    SELECT a.id, a.title, a.preview, array_to_string(array_agg(t.title), ', ') AS tags
+    FROM Articles a
+    INNER JOIN ArticleTags at ON a.id = at.article_id
+    INNER JOIN Tags t ON at.tag_id = t.id
+    GROUP BY a.id, a.title, a.preview
+    ORDER BY a.created_at DESC;`);
+
+    res.json({
+      categories: categories,
+      articles: articles.rows,
+    });
+  } catch (err) {
+    console.error("Error fetching articles by category: ", err);
+    res.status(500).send("Server error");
+  }
+});
+
+app.get("/article", async (req, res) => {
+  try {
+    const id = req.query.id;
+
+    const article = await client.query(
+      `SELECT title, content FROM articles WHERE id = $1`,
+      [id]
+    );
+
+    res.json(article);
+  } catch (err) {
+    console.error("Error fetching articles by category: ", err);
+    res.status(500).send("Server error");
+  }
+});
+
 app.post("/create-customer", async (req, res) => {
   try {
-    const {name, email, services} = req.body;
-    
-    const customerResult = await client.query("INSERT INTO Clients(name, email, created_at) VALUES ($1, $2, NOW()) RETURNING id" , [name, email]);
+    const { name, email, services } = req.body;
+
+    const customerResult = await client.query(
+      "INSERT INTO Clients(name, email, created_at) VALUES ($1, $2, NOW()) RETURNING id",
+      [name, email]
+    );
 
     const customerId = customerResult.rows[0].id;
 
     const servicePromises = services.map((service) => {
-      return client.query("INSERT INTO ClientServices(client_id, service_id) VALUES ($1, $2)", [customerId, service])
-    }) 
+      return client.query(
+        "INSERT INTO ClientServices(client_id, service_id) VALUES ($1, $2)",
+        [customerId, service]
+      );
+    });
 
     await Promise.all[servicePromises];
 
     res.status(200).send("Customer inserted successfully");
-
   } catch (err) {
     console.error("Error inserting customer: ", err);
     res.status(500).send("Server error");
   }
-})
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

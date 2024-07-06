@@ -1,5 +1,5 @@
 "use client";
-import { gotu } from "@/app/ui/fonts";
+import { gotu } from "../ui/fonts";
 import FormText from "./formText";
 import ServicesPreview from "./servicesPreview";
 import { useState, useEffect } from "react";
@@ -49,29 +49,55 @@ export default function From() {
   };
 
   const onChangeName = (value: string) => {
-    if (isInputValueValid(value, "name")) {
+    const result = isInputValueValid(value, "name");
+    if (result === "valid") {
       setName(value);
+      console.log(name)
+    } else {
+      return result;
     }
-  };
-
-  const isInputValueValid = (value: string, type: string): boolean => {
-    if (type === "name") {
-      if (value.length !== 0) {
-        return true;
-      }
-    } else if (type === "email") {
-      if (value.length !== 1) {
-        return true;
-      }
-    }
-    return false;
   };
 
   const onChangeEmail = (value: string) => {
-    if (isInputValueValid(value, "email")) {
+    const result = isInputValueValid(value, "email");
+    if (result === "valid") {
       setEmail(value);
+    } else {
+      return result
     }
   };
+
+  const isInputValueValid = (value: string, type: string): string => {
+    let result = ""
+    if (type === "name") {
+      if (value.length === 0 || value.length < 2) {
+        result = "Numele trebuie să conțină cel puțin două caractere.";
+      } else
+      if (value.length > 50) {
+        result = "Numele nu poate să conțină mai mult de 50 de caractere.";
+      } else
+      if (!/^[a-zA-Z\s'-]+$/.test(value)) {
+        result = "Numele poate să conțină numai litere, spații, apostrofuri sau cratime.";
+      } else
+      result = "valid";
+
+    } else if (type === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!value) {
+        result = "E-mailul este obligatoriu.";
+      } else
+      if (value.length > 254) {
+        result = "E-mailul nu poate să conțină mai mult de 254 de caractere."
+      } else
+      if (!emailRegex.test(value)) {
+        result = "E-mailul nu are forma validă."
+      } else
+      result = "valid";
+    }
+    return result;
+  };
+
+
 
   const onSubmit = (): void => {
     setFormState("LOADING");
