@@ -14,7 +14,9 @@ export default function From() {
   const [error, setError] = useState(null);
 
   const [name, setName] = useState("");
+  const [nameResult, setNameResult] = useState("");
   const [email, setEmail] = useState("");
+  const [emailResult, setEmailResult] = useState("");
 
   const [services, setServices] = useState<Service[]>([]);
   const [selectedServicesIds, setSelectedServicesIds] = useState<
@@ -52,8 +54,10 @@ export default function From() {
     const result = isInputValueValid(value, "name");
     if (result === "valid") {
       setName(value);
-      console.log(name)
+      setNameResult(result);
+      return result;
     } else {
+      setNameResult(result);
       return result;
     }
   };
@@ -62,42 +66,41 @@ export default function From() {
     const result = isInputValueValid(value, "email");
     if (result === "valid") {
       setEmail(value);
+      setEmailResult(result);
+      return result;
     } else {
-      return result
+      setEmailResult(result);
+      return result;
     }
   };
 
   const isInputValueValid = (value: string, type: string): string => {
-    let result = ""
+    let result = "";
     if (type === "name") {
       if (value.length === 0 || value.length < 2) {
         result = "Numele trebuie să conțină cel puțin două caractere.";
-      } else
-      if (value.length > 50) {
+      } else if (value.length > 50) {
         result = "Numele nu poate să conțină mai mult de 50 de caractere.";
-      } else
-      if (!/^[a-zA-Z\s'-]+$/.test(value)) {
-        result = "Numele poate să conțină numai litere, spații, apostrofuri sau cratime.";
-      } else
-      result = "valid";
-
+      } else if (!/^[a-zA-Z\s'-]+$/.test(value)) {
+        result =
+          "Numele poate să conțină numai litere, spații, apostrofuri sau cratime.";
+      } else {
+        result = "valid";
+      }
     } else if (type === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!value) {
         result = "E-mailul este obligatoriu.";
-      } else
-      if (value.length > 254) {
-        result = "E-mailul nu poate să conțină mai mult de 254 de caractere."
-      } else
-      if (!emailRegex.test(value)) {
-        result = "E-mailul nu are forma validă."
-      } else
-      result = "valid";
+      } else if (value.length > 254) {
+        result = "E-mailul nu poate să conțină mai mult de 254 de caractere.";
+      } else if (!emailRegex.test(value)) {
+        result = "E-mailul nu are forma validă.";
+      } else {
+        result = "valid";
+      }
     }
     return result;
   };
-
-
 
   const onSubmit = (): void => {
     setFormState("LOADING");
@@ -117,7 +120,11 @@ export default function From() {
       }
     };
 
-    submitData();
+    if (nameResult === "valid" && emailResult === "valid") {
+      submitData();
+    } else {
+      
+    }
   };
 
   return (
@@ -145,6 +152,8 @@ export default function From() {
           onChangeEmail={onChangeEmail}
           onSubmit={onSubmit}
           formState={formState}
+          nameResult={nameResult}
+          emailResult={emailResult}
         />
       </div>
     </div>

@@ -39,6 +39,7 @@ async function createTables() {
   const createArticlesTable = `
         CREATE TABLE IF NOT EXISTS Articles (
             id SERIAL PRIMARY KEY,
+            img_url VARCHAR(225) NOT NULL,
             title VARCHAR(225) NOT NULL,
             content TEXT NOT NULL,
             preview TEXT NOT NULL,

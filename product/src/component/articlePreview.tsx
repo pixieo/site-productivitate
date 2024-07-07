@@ -22,7 +22,6 @@ export default function ArticlesPreview() {
     imgSrcIT: ["/bg5.jpg", "/bg6.jpg", "/bg7.jpg"],
     imgAltIT: ["article image", "article image", "article image"],
   };
-
   const loadingDiv = () => (
     <div
       className={`flex flex-col delay-150 items-center justify-even gap-4 rounded-xl pb-8 w-1/4 bg-beige-300 border-4 border-beige-500 h-fit ease-in-out transition-all duration-300`}
@@ -64,14 +63,14 @@ export default function ArticlesPreview() {
 
   useEffect(() => {
     setIsLoading(true);
-    getArticlesPreviews("technology")
+    getArticlesPreviews("Tehnologie")
       .then((data) => {
         setArticlesIt(data);
       })
       .catch((error) => {
         setError(error.toString());
       });
-    getArticlesPreviews("productivity")
+    getArticlesPreviews("Productivitate")
       .then((data) => {
         setArticlesProd(data);
       })
@@ -195,7 +194,7 @@ export default function ArticlesPreview() {
                 >
                   <img
                     className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-                    src={articlesProdImg.imgSrcProd[index]}
+                    src={article.img_url}
                     alt={articlesProdImg.imgAltProd[index]}
                   />
                   <div className="flex flex-col gap-1 text-center leading-normal text-clip">
@@ -218,7 +217,7 @@ export default function ArticlesPreview() {
                 >
                   <img
                     className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-                    src={articlesITImg.imgSrcIT[index]}
+                    src={article.img_url}
                     alt={articlesITImg.imgAltIT[index]}
                   />
                   <div

@@ -7,6 +7,7 @@ export type ArticleTitle = {
 //add img_url column  in article table
 export type Article = {
   id: string;
+  img_url: string;
   title: string;
   preview: string;
   tags: string

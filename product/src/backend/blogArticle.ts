@@ -1,11 +1,11 @@
 import { get } from "./client";
 
-export type Article = {
+export type BlogArticle = {
   title: string;
   content: string;
 };
 
-export const getArticlesPreviews = async (id: string): Promise<Article[]> => {
+export const getArticle = async (id: string): Promise<BlogArticle> => {
   const response = await get(`article?id=${id}`);
   return await response.json();
 };

@@ -4,7 +4,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { gotu, lora } from "../ui/fonts";
 import ArticleCategory from "./articleCategory";
 import ArticleDate from "./articleDate";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Article,
   BlogContentResponse,
@@ -15,17 +15,19 @@ import { useRouter } from "next/router";
 export default function ArticleDisplay() {
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
-  const [blogContent, setBlogContent] = useState<BlogContentResponse | undefined>(undefined);
+  const [blogContent, setBlogContent] = useState<
+    BlogContentResponse | undefined
+  >(undefined);
 
   useEffect(() => {
     getBlogContent().then((data) => {
-        setBlogContent(data);
+      setBlogContent(data);
     });
   }, []);
 
   const handleArticleClick = (id: Article["id"]) => {
     router.push(`/blog/${id}`);
-  }
+  };
 
   return (
     <div className={`${lora.className} flex justify-center`}>
@@ -42,8 +44,19 @@ export default function ArticleDisplay() {
             <IoIosArrowForward />
           </button>
         </div>
-        {blogContent === undefined ? <div>mama mea</div> : !toggle ? <ArticleCategory categoriesAndTitles={blogContent.categories} /> : <ArticleDate articles={blogContent.articles} onArticleClick={handleArticleClick}/> }
-        
+        {blogContent === undefined ? (
+          <div>mama mea</div>
+        ) : !toggle ? (
+          <ArticleCategory
+            categoriesAndTitles={blogContent.categories}
+            onArticleClick={handleArticleClick}
+          />
+        ) : (
+          <ArticleDate
+            articles={blogContent.articles}
+            onArticleClick={handleArticleClick}
+          />
+        )}
       </div>
     </div>
   );

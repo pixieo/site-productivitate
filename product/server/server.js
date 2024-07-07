@@ -39,7 +39,7 @@ app.get("/static-content/:id", async (req, res) => {
   }
 });
 
-app.get("/articlesPreview", async (req, res) => {
+app.get("/articles-preview", async (req, res) => {
   const tagTitle = req.query.tagTitle;
 
   if (!tagTitle) {
@@ -49,7 +49,7 @@ app.get("/articlesPreview", async (req, res) => {
 
   try {
     const articlesPreview = await client.query(
-      `SELECT a.title, a.preview 
+      `SELECT a.img_url, a.title, a.preview 
     FROM Articles a
     JOIN ArticleTags at ON a.id = at.article_id
     JOIN Tags t ON at.tag_id = t.id
@@ -91,7 +91,7 @@ app.get("/blog-contents", async (req, res) => {
     }
 
     const articles = await client.query(`
-    SELECT a.id, a.title, a.preview, array_to_string(array_agg(t.title), ', ') AS tags
+    SELECT a.id, a.img_url, a.title, a.preview, array_to_string(array_agg(t.title), ', ') AS tags
     FROM Articles a
     INNER JOIN ArticleTags at ON a.id = at.article_id
     INNER JOIN Tags t ON at.tag_id = t.id
@@ -117,7 +117,7 @@ app.get("/article", async (req, res) => {
       [id]
     );
 
-    res.json(article);
+    res.json(article.rows[0]);
   } catch (err) {
     console.error("Error fetching articles by category: ", err);
     res.status(500).send("Server error");

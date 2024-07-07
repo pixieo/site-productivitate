@@ -10,6 +10,8 @@ type FormTextProps = {
   onChangeEmail: (value: string) => void;
   onSubmit: () => void;
   formState: string;
+  nameResult: string;
+  emailResult: string;
 };
 
 export default function FormText(props: FormTextProps) {
