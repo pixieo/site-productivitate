@@ -10,14 +10,15 @@ type FormTextProps = {
   onChangeEmail: (value: string) => void;
   onSubmit: () => void;
   formState: string;
-  nameResult: string;
-  emailResult: string;
+  nameError: string | undefined;
+  emailError: string | undefined;
+  selectedServicesIdsError: string | undefined;
 };
 
 export default function FormText(props: FormTextProps) {
   const renderFormFields = () => (
-    <div>
-      <div className="mt-8 mb-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+    <div className="w-[30rem]">
+      <div className="mt-8 mb-2">
         <div className="sm:col-span-3 px-4">
           <label htmlFor="full-name" className="block leading-6 text-gray-900">
             Numele complet
@@ -28,24 +29,26 @@ export default function FormText(props: FormTextProps) {
               name="full-name"
               id="full-name"
               autoComplete="name"
-              className="block w-full rounded-md 
-                    bg-beige-200
-                    border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                    focus:ring-2 focus:ring-inset focus:ring-beige-400 sm:text-sm sm:leading-6 shadow-md"
+              className="block w-full bg-beige-200 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
+                  ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-beige-400 sm:text-sm sm:leading-6 shadow-md"
               onChange={(e) => {
                 props.onChangeName(e.target.value.trim());
               }}
             />
+            {props.nameError ? (
+              <p className="text-red-500">{props.nameError}</p>
+            ) : <div className="h-[1.5rem]"></div>}
           </div>
         </div>
       </div>
 
       <div className="sm:col-span-4 px-4">
         <label htmlFor="email" className="block leading-6 text-gray-900">
-          Email
+          Email 
         </label>
         <div className="mt-2">
           <input
+          
             id="email"
             name="email"
             type="email"
@@ -56,10 +59,20 @@ export default function FormText(props: FormTextProps) {
               props.onChangeEmail(e.target.value.trim());
             }}
           />
+          {props.emailError ? (
+            <p className="text-red-500">{props.emailError}</p>
+          ) : <div className="h-[1.5rem]" > </div>}
         </div>
       </div>
-      <div className="flex mt-4 mx-4 gap-6 h-8">
-        {props.selectedServicesIds.length === 0 ? (
+
+
+      
+      <div className="flex mt-2 mx-4 gap-6 h-8">
+        {props.selectedServicesIdsError ? (
+          <div className="text-red-500 mt-2">
+            Nu ai selectat niciun serviciu.
+          </div>
+        ) : props.selectedServicesIds.length === 0 ? (
           <div className="text-slate-600/60 mt-2">
             Nu ai selectat niciun serviciu.
           </div>
@@ -84,7 +97,7 @@ export default function FormText(props: FormTextProps) {
           })
         )}
       </div>
-      <div className="flex items-center justify-end gap-x-6 pr-4">
+      <div className="flex items-center justify-end gap-x-6 pr-4 pb-4">
         <button
           type="submit"
           className="rounded-md px-3 py-1 font-semibold shadow-md
@@ -100,26 +113,15 @@ export default function FormText(props: FormTextProps) {
   );
 
   return (
-    <form
-      className={`${gotu.className} bg-beige-500 h-4/5 rounded-xl shadow-md`}
+    <form 
+    noValidate
+      className={`${gotu.className} bg-beige-500 rounded-xl shadow-md`}
       onSubmit={(e) => {
         e.preventDefault();
         props.onSubmit();
       }}
     >
       {props.formState === "INITAL" || "LOADING" ? renderFormFields() : null}
-
-      {props.formState === "SUCCESSFUL" ? (
-        <div>
-          Mesajul tau a fost trimis. Te voi contacta eu in cel mai scurt timp.
-        </div>
-      ) : null}
-      {props.formState === "UNSUCCESSFUL" ? (
-        <div>
-          Mesajul tau nu a fost trimis. Incearca mai tarziu. Daca eroarea
-          persista, scrie-mi pe Instagram.
-        </div>
-      ) : null}
     </form>
   );
 }

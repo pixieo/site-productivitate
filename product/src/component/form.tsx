@@ -7,39 +7,34 @@ import { Service, getServices } from "../backend/services";
 import { Customer, createCustomer } from "../backend/customer";
 
 export default function From() {
+  const [services, setServices] = useState<Service[]>([]);
+
   const [formState, setFormState] = useState<
     "INITIAL" | "LOADING" | "SUCCESSFUL" | "UNSUCCESSFUL"
   >("INITIAL");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [name, setName] = useState("");
-  const [nameResult, setNameResult] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailResult, setEmailResult] = useState("");
+  const [nameError, setNameError] = useState<string>();
 
-  const [services, setServices] = useState<Service[]>([]);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string>();
+
   const [selectedServicesIds, setSelectedServicesIds] = useState<
     Service["id"][]
   >([]);
+  const [selectedServicesIdsError, setSelectedServicesIdsError] = useState<string>();
+
 
   useEffect(() => {
     getServices()
       .then((data) => {
         setServices(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.toString());
-        setIsLoading(false);
       });
   }, []);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   const handleServicePressed = (serviceId: string) => {
+    setSelectedServicesIdsError(undefined);
+    
     setSelectedServicesIds((prevIds) => {
       if (!prevIds.includes(serviceId)) {
         return [...prevIds, serviceId];
@@ -50,60 +45,41 @@ export default function From() {
     });
   };
 
-  const onChangeName = (value: string) => {
-    const result = isInputValueValid(value, "name");
-    if (result === "valid") {
-      setName(value);
-      setNameResult(result);
-      return result;
-    } else {
-      setNameResult(result);
-      return result;
-    }
-  };
+  const validateName = (): void => {
+    setNameError(undefined);
 
-  const onChangeEmail = (value: string) => {
-    const result = isInputValueValid(value, "email");
-    if (result === "valid") {
-      setEmail(value);
-      setEmailResult(result);
-      return result;
-    } else {
-      setEmailResult(result);
-      return result;
-    }
-  };
+    if (name.length < 2) {
+      setNameError("Numele trebuie să conțină cel puțin două caractere.")
+    } else if (name.length > 50) {
+      setNameError("Numele nu poate să conțină mai mult de 50 de caractere.");
+    } else if (!/^[a-zA-Z\s'-]+$/.test(name)) {
+      setNameError("Numele poate să conțină numai litere, spații, apostrofuri sau cratime.");
+    };
+  }
 
-  const isInputValueValid = (value: string, type: string): string => {
-    let result = "";
-    if (type === "name") {
-      if (value.length === 0 || value.length < 2) {
-        result = "Numele trebuie să conțină cel puțin două caractere.";
-      } else if (value.length > 50) {
-        result = "Numele nu poate să conțină mai mult de 50 de caractere.";
-      } else if (!/^[a-zA-Z\s'-]+$/.test(value)) {
-        result =
-          "Numele poate să conțină numai litere, spații, apostrofuri sau cratime.";
-      } else {
-        result = "valid";
-      }
-    } else if (type === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!value) {
-        result = "E-mailul este obligatoriu.";
-      } else if (value.length > 254) {
-        result = "E-mailul nu poate să conțină mai mult de 254 de caractere.";
-      } else if (!emailRegex.test(value)) {
-        result = "E-mailul nu are forma validă.";
-      } else {
-        result = "valid";
-      }
+  const validateEmail = (): void => {
+    setEmailError(undefined);
+
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+    if (!email) {
+      setEmailError("E-mailul este obligatoriu.");
+    } else if (email.length > 254) {
+      setEmailError("E-mailul nu poate să conțină mai mult de 254 de caractere.");
+    } else if (!emailRegex.test(email)) {
+      setEmailError("E-mailul nu are forma validă.");
     }
-    return result;
-  };
+  }
+
+  const validateServicesIds = (): void => {
+    setSelectedServicesIdsError(undefined);
+
+    if (selectedServicesIds.length === 0) {
+      setSelectedServicesIdsError("Selectează cel puțin un serviciu.")
+    }
+  }
 
   const onSubmit = (): void => {
-    setFormState("LOADING");
     const submitData = async () => {
       try {
         const customer: Customer = {
@@ -120,11 +96,16 @@ export default function From() {
       }
     };
 
-    if (nameResult === "valid" && emailResult === "valid") {
-      submitData();
-    } else {
-      
+    validateName();
+    validateEmail();
+    validateServicesIds();
+
+    if (nameError || emailError || selectedServicesIdsError) {
+      return;
     }
+
+    setFormState("LOADING");
+    submitData();
   };
 
   return (
@@ -148,12 +129,13 @@ export default function From() {
           selectedServicesIds={selectedServicesIds}
           services={services}
           onServicePressed={handleServicePressed}
-          onChangeName={onChangeName}
-          onChangeEmail={onChangeEmail}
+          onChangeName={setName}
+          onChangeEmail={setEmail}
           onSubmit={onSubmit}
           formState={formState}
-          nameResult={nameResult}
-          emailResult={emailResult}
+          nameError={nameError}
+          emailError={emailError}
+          selectedServicesIdsError={selectedServicesIdsError}
         />
       </div>
     </div>

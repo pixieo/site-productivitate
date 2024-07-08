@@ -21,7 +21,7 @@ export default function ArticleDisplay() {
 
   useEffect(() => {
     getBlogContent().then((data) => {
-      setBlogContent(data);
+       setBlogContent(data);
     });
   }, []);
 
@@ -31,7 +31,7 @@ export default function ArticleDisplay() {
 
   return (
     <div className={`${lora.className} flex justify-center`}>
-      <div className="flex flex-col gap-[3rem] w-[70rem]">
+      <div className="flex flex-col gap-[1rem] w-[70rem]">
         <div className="flex flex-col gap-3 justify-center items-center h-[12rem]">
           <div className={`text-3xl font-bold`}>Toate articolele</div>
           <button
@@ -45,7 +45,7 @@ export default function ArticleDisplay() {
           </button>
         </div>
         {blogContent === undefined ? (
-          <div>mama mea</div>
+          <div></div>
         ) : !toggle ? (
           <ArticleCategory
             categoriesAndTitles={blogContent.categories}

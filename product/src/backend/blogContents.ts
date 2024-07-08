@@ -10,7 +10,8 @@ export type Article = {
   img_url: string;
   title: string;
   preview: string;
-  tags: string
+  created_at: string;
+  tags: string;
 };
 
 export type BlogContentResponse = {

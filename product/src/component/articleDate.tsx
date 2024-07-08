@@ -11,7 +11,7 @@ export default function ArticleDate({
   articles: BlogContentResponse["articles"];
   onArticleClick: (articleId: Article["id"]) => void;
 }) {
-  console.log(articles);
+
   return (
     <div className={`${lora.className} flex justify-center cursor-default`}>
       <div className="flex flex-col w-[70rem]">
@@ -23,8 +23,10 @@ export default function ArticleDate({
                 key={index}
                 className="flex p-[3rem] gap-[2rem] hover:bg-beige-600/30 hover:border-y-beige-600 border-transparent border-2 hover:cursor-pointer transition ease-in duration-200 "
               >
-                <img className="object-none h-[14rem] w-[8rem]" src={article.img_url} alt="image" />
-                <div>
+                <div className="w-1/6">
+                  <img className="object-cover w-full h-[10rem]" src={article.img_url} alt="image" />
+                </div>
+                <div className="w-5/6 flex flex-col align-center">
                   <div className={`font-extrabold text-xl`}>
                     {" "}
                     {article.title}{" "}
@@ -34,6 +36,7 @@ export default function ArticleDate({
                     {" "}
                     {article.tags}{" "}
                   </div>
+                  <div className={`${gotu.className} text-sm text-slate-700/40 text-end`}>{article.created_at.substring(0, 10)}</div>
                 </div>
               </div>
             ))}

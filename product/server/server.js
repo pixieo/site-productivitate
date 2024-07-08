@@ -91,7 +91,7 @@ app.get("/blog-contents", async (req, res) => {
     }
 
     const articles = await client.query(`
-    SELECT a.id, a.img_url, a.title, a.preview, array_to_string(array_agg(t.title), ', ') AS tags
+    SELECT a.id, a.img_url, a.title, a.preview, a.created_at, array_to_string(array_agg(t.title), ', ') AS tags
     FROM Articles a
     INNER JOIN ArticleTags at ON a.id = at.article_id
     INNER JOIN Tags t ON at.tag_id = t.id

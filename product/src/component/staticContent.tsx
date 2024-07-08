@@ -26,7 +26,7 @@ export default function StaticContent({ type }: StaticContentProps) {
         setError(error.toString());
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [type]);
 
   if (isLoading && type === "site-description") {
     return (

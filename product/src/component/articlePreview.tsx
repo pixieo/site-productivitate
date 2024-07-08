@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { gotu } from "../ui/fonts";
 import { ArticlePreview, getArticlesPreviews } from "../backend/articles";
+import Link from "next/link";
 
 export default function ArticlesPreview() {
   const [isClickedProd, setIsClickedProd] = useState(true);
@@ -239,11 +240,11 @@ export default function ArticlesPreview() {
       </div>
 
       <div className={`${gotu.className} flex justify-center mb-20`}>
-        <a href="/blog">
+        <Link href="/blog">
         <button className="bg-beige-300 rounded-3xl text-lg py-1 px-10 border-2 border-beige-400 hover:bg-beige-500 hover:border-beige-600 ease-in duration-150 ">
           VEZI TOATE ARTICOLELE
         </button>
-        </a>
+        </Link>
       </div>
     </div>
   );
