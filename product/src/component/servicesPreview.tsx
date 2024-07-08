@@ -1,3 +1,4 @@
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Service } from "../backend/services";
 import { gotu } from "../ui/fonts";
 
@@ -10,7 +11,8 @@ type ServicesPreviewProps = {
 export default function ServicesPreview(props: ServicesPreviewProps) {
   return (
     <div className="w-1/2 flex flex-col md:flex-row gap-20">
-      {props.services.map((service, index) => (
+      {props.services.map((service, index) => {
+        return (
         <div
           key={index}
           onClick={() => {
@@ -25,18 +27,16 @@ export default function ServicesPreview(props: ServicesPreviewProps) {
           }
           `}
         >
-          <img
-            className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-            src={service.imgLink}
-            alt={service.imgDescription}
-          />
+          <img className="object-cover m-2 max-h-40 max-w-80 rounded-xl" src={`http://localhost:1337${service.attributes.Image.data.attributes.url}`}/>
 
           <div className="flex flex-col gap-1  px-6">
-            <p className={`${gotu.className} text-lg text-center`}> {service.title} </p>
-            <p className="text-center">{service.preview}</p>
+            <p className={`${gotu.className} text-lg text-center`}>
+              {service.attributes.Title}
+            </p>
+            <p className="text-center">{service.attributes.Preview}</p>
           </div>
         </div>
-      ))}
+      )})}
     </div>
   );
 }

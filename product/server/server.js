@@ -18,7 +18,7 @@ const client = new Client({
 
 client.connect();
 
-app.get("/static-content/:id", async (req, res) => {
+app.get("/api/:id", async (req, res) => {
   const { id } = req.params;
 
   try {

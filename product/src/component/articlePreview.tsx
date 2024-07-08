@@ -12,17 +12,7 @@ export default function ArticlesPreview() {
   const [articlesProd, setArticlesProd] = useState<ArticlePreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const articlesProdImg = {
-    isClicked: isClickedProd,
-    imgSrcProd: ["/bg2.jpg", "/bg1.jpg", "/bg3.jpg"],
-    imgAltProd: ["article image", "article image", "article image"],
-  };
-  const articlesITImg = {
-    isClicked: isClickedIT,
-    imgSrcIT: ["/bg5.jpg", "/bg6.jpg", "/bg7.jpg"],
-    imgAltIT: ["article image", "article image", "article image"],
-  };
+  console.log(articlesIt)
   const loadingDiv = () => (
     <div
       className={`flex flex-col delay-150 items-center justify-even gap-4 rounded-xl pb-8 w-1/4 bg-beige-300 border-4 border-beige-500 h-fit ease-in-out transition-all duration-300`}
@@ -195,17 +185,16 @@ export default function ArticlesPreview() {
                 >
                   <img
                     className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-                    src={article.img_url}
-                    alt={articlesProdImg.imgAltProd[index]}
+                    src={`http://localhost:1337${article.attributes.Image.data.attributes.url}`}
                   />
                   <div className="flex flex-col gap-1 text-center leading-normal text-clip">
                     <p className={`${gotu.className} px-1 text-xl font-bold`}>
                       {" "}
-                      {article.title}{" "}
+                      {article.attributes.Title}{" "}
                     </p>
-                    <p className="px-6 truncate line-clamp-[8] whitespace-normal">
+                    <p className="px-6 truncate line-clamp-[6] whitespace-normal">
                       {" "}
-                      {article.preview}{" "}
+                      {article.attributes.Preview}{" "}
                     </p>
                   </div>
                 </div>
@@ -218,8 +207,7 @@ export default function ArticlesPreview() {
                 >
                   <img
                     className="object-cover m-2 max-h-40 max-w-80 rounded-xl"
-                    src={article.img_url}
-                    alt={articlesITImg.imgAltIT[index]}
+                    src={`http://localhost:1337${article.attributes.Image.data.attributes.url}`}
                   />
                   <div
                     className="flex flex-col gap-1 text-center leading-normal "
@@ -227,11 +215,11 @@ export default function ArticlesPreview() {
                   >
                     <p className={`${gotu.className} px-1 text-xl font-bold`}>
                       {" "}
-                      {article.title}{" "}
+                      {article.attributes.Title}{" "}
                     </p>
                     <p className="px-6 truncate line-clamp-[8] whitespace-normal">
                       {" "}
-                      {article.preview}{" "}
+                      {article.attributes.Preview}{" "}
                     </p>
                   </div>
                 </div>

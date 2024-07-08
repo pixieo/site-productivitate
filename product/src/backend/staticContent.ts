@@ -1,13 +1,13 @@
 import { get } from "./client";
 
 export type StaticContent = {
-  title: string;
-  content: string;
+  Title: string;
+  Content: string;
 };
 
 export const getStaticContent = async (
   type: string
 ): Promise<StaticContent> => {
-  const response = await get(`static-content/${type}`);
-  return await response.json();
+  const response = await get(`api/${type}`);
+  return (await response.json())["data"]["attributes"];
 };

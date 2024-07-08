@@ -88,10 +88,8 @@ export default function From() {
           services: selectedServicesIds,
         };
         await createCustomer(customer);
-        console.log("Customer created successfully");
         setFormState("SUCCESSFUL");
       } catch (error) {
-        console.error("Error creating customer:", error);
         setFormState("UNSUCCESSFUL");
       }
     };

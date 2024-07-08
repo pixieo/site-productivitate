@@ -15,7 +15,7 @@ export default function AboutSite() {
         />
       </div>
       <div className="flex flex-col flex-wrap justify-center gap-6 rounded-xl px-14 py-10 md:w-7/12 bg-beige-300">
-        {<StaticContent type={"site-description"} />}
+        {<StaticContent type={"about-site"} />}
       </div>
     </div>
   );

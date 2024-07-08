@@ -1,14 +1,14 @@
 "use client";
 
-import { Article, BlogContentResponse } from "../backend/blogContents";
+import { ArticlesByCategory } from "../backend/articleByCategory";
 import { gotu, lora } from "../ui/fonts";
 
 export default function ArticleCategory({
   categoriesAndTitles,
   onArticleClick,
 }: {
-  categoriesAndTitles: BlogContentResponse["categories"];
-  onArticleClick: (articleId: Article["id"]) => void;
+  categoriesAndTitles: ArticlesByCategory;
+  onArticleClick: (articleId: string) => void;
 }) {
   return (
     <div className={`${lora.className} flex justify-center cursor-default`}>

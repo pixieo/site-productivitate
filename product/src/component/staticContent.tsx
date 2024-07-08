@@ -5,6 +5,7 @@ import {
   StaticContent as StaticContentData,
   getStaticContent,
 } from "../backend/staticContent";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 type StaticContentProps = {
   type: string;
@@ -17,7 +18,6 @@ export default function StaticContent({ type }: StaticContentProps) {
 
   useEffect(() => {
     setIsLoading(true);
-
     getStaticContent(type)
       .then((data) => {
         setData(data);
@@ -28,7 +28,7 @@ export default function StaticContent({ type }: StaticContentProps) {
       .finally(() => setIsLoading(false));
   }, [type]);
 
-  if (isLoading && type === "site-description") {
+  if (isLoading && type === "about-site") {
     return (
       <div className="min-h-[16.2rem] min-w-[48.4rem]">
         <div className="flex animate-pulse space-x-4 w-[41rem]">
@@ -59,7 +59,7 @@ export default function StaticContent({ type }: StaticContentProps) {
     );
   }
 
-  if (isLoading && type === "self-description") {
+  if (isLoading && type === "about-me") {
     return (
       <div className="min-h-[22.3rem] min-w-[41.2rem]">
         <div className="flex animate-pulse space-x-4 w-[41rem]">
@@ -110,10 +110,10 @@ export default function StaticContent({ type }: StaticContentProps) {
       <p
         className={`${gotu.className} text-5xl text-gray-800 md:leading-normal text-5xl tracking-wide`}
       >
-        {data?.title}
+        {data?.Title}
       </p>
       <p className={`text-xl leading-relaxed text-gray-800 `}>
-        {data?.content}
+        <BlocksRenderer content={data.Content} />
       </p>
     </>
   );

@@ -89,7 +89,7 @@ export default function FormText(props: FormTextProps) {
                   className="bg-beige-200 rounded-md py-1 px-6 shadow-md cursor-pointer relative group-hover:opacity-80 transition duration-200"
                   onClick={() => props.onServicePressed(service.id)}
                 >
-                  {service.title}
+                  {service.attributes.Title}
                   <IoCloseOutline className="absolute top-0 right-0 opacity-35 group-hover:opacity-100 transition duration-200" />
                 </div>
               </div>
