@@ -45,37 +45,31 @@ export default function From() {
     });
   };
 
-  const validateName = (): void => {
-    setNameError(undefined);
-
+  const getNameValidationError = (): string | undefined => {
     if (name.length < 2) {
-      setNameError("Numele trebuie să conțină cel puțin două caractere.")
+      return "Numele trebuie să conțină cel puțin două caractere.";
     } else if (name.length > 50) {
-      setNameError("Numele nu poate să conțină mai mult de 50 de caractere.");
+      return "Numele nu poate să conțină mai mult de 50 de caractere.";
     } else if (!/^[a-zA-Z\s'-]+$/.test(name)) {
-      setNameError("Numele poate să conțină numai litere, spații, apostrofuri sau cratime.");
+      return "Numele poate să conțină numai litere, spații, apostrofuri sau cratime.";
     };
   }
 
-  const validateEmail = (): void => {
-    setEmailError(undefined);
-
+  const getEmailValidationError = (): string | undefined => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
     if (!email) {
-      setEmailError("E-mailul este obligatoriu.");
+      return "E-mailul este obligatoriu.";
     } else if (email.length > 254) {
-      setEmailError("E-mailul nu poate să conțină mai mult de 254 de caractere.");
+      return "E-mailul nu poate să conțină mai mult de 254 de caractere.";
     } else if (!emailRegex.test(email)) {
-      setEmailError("E-mailul nu are forma validă.");
+      return "E-mailul nu are forma validă.";
     }
   }
 
-  const validateServicesIds = (): void => {
-    setSelectedServicesIdsError(undefined);
-
+  const getSelectedServicesIdsValidationError = (): string | undefined => {
     if (selectedServicesIds.length === 0) {
-      setSelectedServicesIdsError("Selectează cel puțin un serviciu.")
+      return "Selectează cel puțin un serviciu.";
     }
   }
 
@@ -94,11 +88,15 @@ export default function From() {
       }
     };
 
-    validateName();
-    validateEmail();
-    validateServicesIds();
+    const nameValidationError = getNameValidationError();
+    const emailValidationError = getEmailValidationError();
+    const selectedServicesIdsValidationError = getSelectedServicesIdsValidationError();
 
-    if (nameError || emailError || selectedServicesIdsError) {
+    setNameError(nameValidationError);
+    setEmailError(emailValidationError);
+    setSelectedServicesIdsError(selectedServicesIdsValidationError);
+
+    if (nameValidationError || emailValidationError || selectedServicesIdsValidationError) {
       return;
     }
 

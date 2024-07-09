@@ -37,18 +37,19 @@ export default function FormText(props: FormTextProps) {
             />
             {props.nameError ? (
               <p className="text-red-500">{props.nameError}</p>
-            ) : <div className="h-[1.5rem]"></div>}
+            ) : (
+              <div className="h-[1.5rem]"></div>
+            )}
           </div>
         </div>
       </div>
 
       <div className="sm:col-span-4 px-4">
         <label htmlFor="email" className="block leading-6 text-gray-900">
-          Email 
+          Email
         </label>
         <div className="mt-2">
           <input
-          
             id="email"
             name="email"
             type="email"
@@ -61,12 +62,12 @@ export default function FormText(props: FormTextProps) {
           />
           {props.emailError ? (
             <p className="text-red-500">{props.emailError}</p>
-          ) : <div className="h-[1.5rem]" > </div>}
+          ) : (
+            <div className="h-[1.5rem]"> </div>
+          )}
         </div>
       </div>
 
-
-      
       <div className="flex mt-2 mx-4 gap-6 h-8">
         {props.selectedServicesIdsError ? (
           <div className="text-red-500 mt-2">
@@ -98,23 +99,36 @@ export default function FormText(props: FormTextProps) {
         )}
       </div>
       <div className="flex items-center justify-end gap-x-6 pr-4 pb-4">
-        <button
-          type="submit"
-          className="rounded-md px-3 py-1 font-semibold shadow-md
+        {props.formState === "SUCCESSFUL" ? (
+          <button
+            type="submit"
+            className="rounded-md px-3 py-1 font-semibold shadow-md
+                      border-2 border-beige-400 bg-beige-200 mt-4 ease-in duration-150
+                      focus-visible:outline focus-visible:outline-2 
+                      focus-visible:outline-offset-2 focus-visible:outline-beige-400"
+            disabled
+          >
+            Trimis!
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="rounded-md px-3 py-1 font-semibold shadow-md
                 border-2 border-beige-400 bg-beige-200 mt-4 ease-in duration-150
                 hover:border-beige-600 focus-visible:outline focus-visible:outline-2 
                 focus-visible:outline-offset-2 focus-visible:outline-beige-400"
-          disabled={props.formState === "LOADING"}
-        >
-          Trimite
-        </button>
+            disabled={props.formState === "LOADING"}
+          >
+            Trimite
+          </button>
+        )}
       </div>
     </div>
   );
 
   return (
-    <form 
-    noValidate
+    <form
+      noValidate
       className={`${gotu.className} bg-beige-500 rounded-xl shadow-md`}
       onSubmit={(e) => {
         e.preventDefault();

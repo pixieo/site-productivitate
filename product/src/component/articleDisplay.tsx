@@ -6,7 +6,7 @@ import ArticleCategory from "./articleCategory";
 import ArticleDate from "./articleDate";
 import { useEffect, useState } from "react";
 import {
-  ArticlesByCategory,
+  CategoryWithArticle,
   getArticlesByCategory,
 } from "../backend/articleByCategory";
 import { useRouter } from "next/router";
@@ -16,26 +16,27 @@ export default function ArticleDisplay() {
   const router = useRouter();
   const [toggle, setToggle] = useState(false);
   const [articlesByCategory, setArticlesByCategory] = useState<
-    ArticlesByCategory | undefined
+    CategoryWithArticle[] | undefined
   >(undefined);
 
   const [articleByDate, setArticleByDate] = useState<
-  ArticleByDate | undefined
->(undefined);
+    ArticleByDate[] | undefined
+  >(undefined);
 
   useEffect(() => {
     getArticlesByCategory().then((data) => {
-       setArticlesByCategory(data);
+      setArticlesByCategory(data);
     });
+
     getArticleByDate().then((data) => {
       setArticleByDate(data);
-    })
+    });
   }, []);
 
-  const handleArticleClick = (id: string) => {
+  const handleArticleClick = (id: number) => {
     router.push(`/blog/${id}`);
   };
-  console.log("F2", articleByDate)
+
   return (
     <div className={`${lora.className} flex justify-center`}>
       <div className="flex flex-col gap-[1rem] w-[70rem]">
@@ -51,7 +52,7 @@ export default function ArticleDisplay() {
             <IoIosArrowForward />
           </button>
         </div>
-        {articlesByCategory === undefined ? (
+        {articlesByCategory === undefined || articleByDate === undefined ? (
           <div></div>
         ) : !toggle ? (
           <ArticleCategory

@@ -46,7 +46,7 @@ export default function Instagram() {
             </Link>
 
             <Link
-              href={"https://www.instagram.com/p/C3F78LboAF_/"}
+              href={"https://www.instagram.com/andreea.zosin/"}
               target="_blank"
               className="hover:opacity-70 transition-opacity"
             >

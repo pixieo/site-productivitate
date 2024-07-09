@@ -9,7 +9,7 @@ export default function BlogNavbar() {
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
       style={{ height: 'var(--navbar-height)' }}>
-        <a href="/" target="_blank">
+        <a href="/">
             <span className="self-center text-2xl whitespace-nowrap font-bold pl-6">
               BALANCE
             </span>
@@ -21,7 +21,7 @@ export default function BlogNavbar() {
         md:border-0 md:bg-transparent "
           >
             <li>
-              <a href="https://www.instagram.com/andreea.zosin/">
+              <a href="https://www.instagram.com/andreea.zosin/" target="_blank">
                 <button className="text-3xl text-gray-900 mt-2.5 mb-2.5 px-2">
                 <PiInstagramLogoLight />
                 </button>

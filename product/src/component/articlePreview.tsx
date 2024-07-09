@@ -12,7 +12,6 @@ export default function ArticlesPreview() {
   const [articlesProd, setArticlesProd] = useState<ArticlePreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(articlesIt)
   const loadingDiv = () => (
     <div
       className={`flex flex-col delay-150 items-center justify-even gap-4 rounded-xl pb-8 w-1/4 bg-beige-300 border-4 border-beige-500 h-fit ease-in-out transition-all duration-300`}
@@ -192,7 +191,7 @@ export default function ArticlesPreview() {
                       {" "}
                       {article.attributes.Title}{" "}
                     </p>
-                    <p className="px-6 truncate line-clamp-[6] whitespace-normal">
+                    <p className="px-6 truncate line-clamp-[8] whitespace-normal">
                       {" "}
                       {article.attributes.Preview}{" "}
                     </p>

@@ -1,34 +1,42 @@
 import { get } from "./client";
 
-export type ArticleTitle = {
-  id: string;
-  title: string;
+export type Article = {
+  id: number;
+  attributes: {
+    Title: string;
+  };
 };
 
-export type ArticlesByCategory = {
-  categories: {
-    title: string;
-    articleTitles: ArticleTitle[];
-  }[];
+export type Category = {
+  id: number;
+  attributes: {
+    Title: string;
+  };
 };
 
-export const getArticlesByCategory = async (): Promise<ArticlesByCategory> => {
-  const categories = await get(`api/categories`);
-  const c = (await categories.json())["data"]
-  console.log("cat: ", c)
+export type CategoryWithArticle = {
+  category: Category;
+  articles: Article[];
+};
 
-  c.map((cc, i) => {
-  const titles = get(`api/articles?populate=*&filters[Categories][Title][$eq]=${cc}&sort=createdAt:desc&pagination[limit]=3`)
-    console.log("cc ",cc)
-    console.log("tit ", titles)
-  })
+export const getArticlesByCategory = async (): Promise<
+  CategoryWithArticle[]
+> => {
+  const categoriesWithArticles: CategoryWithArticle[] = [];
 
-  const titles = await get(`api/articles?populate=*&filters[Categories][Title][$eq]=${c}&sort=createdAt:desc&pagination[limit]=3`)
-  const titless = (await titles.json())["data"]
+  const categoriesResponse = await get(`api/categories?sort=Title`);
+  const categories = (await categoriesResponse.json())["data"] as Category[];
 
-  console.log(titless)
-  const articles = await get(`api/articles?populate=*&sort=createdAt:desc`)
-  const response = (await articles.json())["data"]
+  await Promise.all(categories.map(async (category) => {
+    const articlesForCategoryResponse = await get(
+      `api/articles?populate=*&filters[Categories][id][$eq]=${category.id}&sort=createdAt:desc&pagination[limit]=3`
+    );
 
-  return articles.json();
+    categoriesWithArticles.push({
+      category: category,
+      articles: (await articlesForCategoryResponse.json())["data"] as Article[],
+    });
+  }));
+
+  return categoriesWithArticles;
 };
